@@ -1,0 +1,22 @@
+server:
+  port: 8082
+
+## Default connection pool
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/dev
+    username: postgres
+    password: postgres
+  flyway:
+    schemas: shopping
+    user: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/dev
+    
