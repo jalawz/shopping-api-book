@@ -1,6 +1,7 @@
 package com.casadocodigo.shoppingapi.model;
 
 import javax.persistence.Embeddable;
+import javax.persistence.Table;
 
 import com.casadocodigo.shoppingapi.dto.ItemDTO;
 

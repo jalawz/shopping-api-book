@@ -36,7 +36,7 @@ public class ShopService {
     }
 
     public List<ShopDTO> getByDate(ShopDTO shopDTO) {
-        return shopRepository.findAllByDateGreaterThanEquals(shopDTO.getDate())
+        return shopRepository.findAllByDateGreaterThanEqual(shopDTO.getDate())
             .stream()
             .map(ShopDTO::convert)
             .collect(toList());
@@ -53,17 +53,17 @@ public class ShopService {
             );
     }
 
-    public ShopDTO save(ShopDTO dto) {
+    public Shop save(ShopDTO dto) {
         dto.setTotal(
             dto.getItems()
                 .stream()
                 .map(item -> item.getPrice())
-                .reduce((float) 0, Float::sum)
+                .reduce((float) 0, (a, b) -> Float.sum(a, b))
         );
 
         Shop shopEntity = Shop.convert(dto);
         shopEntity.setDate(new Date());
-        return ShopDTO.convert(shopRepository.save(shopEntity));
+        return shopRepository.save(shopEntity);
     }
     
 }

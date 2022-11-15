@@ -37,7 +37,7 @@ public class Shop {
     private Date date;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "item", joinColumns = @JoinColumn(name = "shop_id"))
+    @CollectionTable(name = "item", joinColumns = @JoinColumn(name = "shop_id"), schema = "shopping")
     private List<Item> items;
 
     public static Shop convert(ShopDTO dto) {
