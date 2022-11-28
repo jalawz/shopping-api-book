@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.casadocodigo.shoppingapi.dto.ShopDTO;
+import com.casadocodigo.shoppingapi.dto.ShopReportDTO;
 import com.casadocodigo.shoppingapi.model.Shop;
+import com.casadocodigo.shoppingapi.repository.ReportRepository;
 import com.casadocodigo.shoppingapi.repository.ShopRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class ShopService {
 
     private final ShopRepository shopRepository;
+    private final ReportRepository reportRepository;
 
     public List<ShopDTO> getAll() {
         return shopRepository.findAll()
@@ -64,6 +67,24 @@ public class ShopService {
         Shop shopEntity = Shop.convert(dto);
         shopEntity.setDate(new Date());
         return shopRepository.save(shopEntity);
+    }
+
+    public List<ShopDTO> getShopsByFilter(
+        Date dataInicio,
+        Date dataFim,
+        Float valorMinimo
+    ) {
+        return reportRepository.getShopByFilters(dataInicio, dataFim, valorMinimo)
+                    .stream()
+                    .map(ShopDTO::convert)
+                    .collect(toList());
+    }
+
+    public ShopReportDTO getReportByDate(
+        Date dataInicio,
+        Date dataFim
+    ) {
+        return reportRepository.getReportByDate(dataInicio, dataFim);
     }
     
 }
